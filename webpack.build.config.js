@@ -1,30 +1,22 @@
-/*
-*  more info:
-*    https://medium.freecodecamp.org/part-1-react-app-from-scratch-using-webpack-4-562b1d231e75
-*    https://qiita.com/yoshimo123/items/b8c34a74d87ef4eaf8f7
-*/
-// dev用的設定檔
-const path = require('path');
-// const devMode = process.env.NODE_ENV !== 'production';
-const HtmlWebPackPlugin = require('html-webpack-plugin');
+// release用的專案
 
-const htmlPlugin = new HtmlWebPackPlugin({
-  template: './src/index.html',
-  // favicon: './src/favicon.ico',
-  filename: './index.html',
-});
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   entry: ['babel-polyfill', path.resolve(__dirname, './src/index.js')],
   output: {
+    filename: 'js/[name].[hash].js',
     path: path.resolve(__dirname, 'dist'),
-    filename: 'index_bundle.js',
     publicPath: '/',
   },
   module: {
     rules: [
+
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -40,19 +32,11 @@ module.exports = {
         loader: 'json-loader',
       },
       {
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader',
-            options: { minimize: true },
-          },
-        ],
-      },
-      {
-        test: /\.scss/,
-        use: [
-          'style-loader',
-          {
+        test: /\.(css|scss)$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          publicPath: '../',
+          use: [{
             loader: 'css-loader',
             options: {
               url: false,
@@ -65,6 +49,16 @@ module.exports = {
           {
             loader: 'sass-loader',
           }],
+        }),
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: 'html-loader',
+            options: { minimize: true },
+          },
+        ],
       },
       {
         test: /\.(png|jpg|gif|md)$/,
@@ -81,27 +75,41 @@ module.exports = {
 
     ],
   },
-  plugins: [htmlPlugin],
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    port: 9000,
+    open: true,
+    hot: true,
+  },
   resolve: {
-    extensions: ['.js', '.json', '.jsx', '.less', '.scss', '.css'],
+    extensions: ['*', '.json', '.js', '.jsx', '.less', '.scss', '.css'],
     modules: [
       path.resolve(__dirname, 'node_modules'),
       path.join(__dirname, './src'),
     ],
     alias: {
-      store: path.resolve(__dirname, 'src/store'),
+      react: path.join(__dirname, 'node_modules', 'react'),
       actions: path.resolve(__dirname, 'src/actions'),
       components: path.resolve(__dirname, 'src/components'),
-      configs: path.resolve(__dirname, 'src/configs'),
       reducers: path.resolve(__dirname, 'src/reducers'),
       images: path.resolve(__dirname, 'src/images'),
+      libs: path.resolve(__dirname, 'src/libs'),
       historyLib: path.resolve(__dirname, 'src/historyLib'),
     },
   },
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    historyApiFallback: true,
-    port: 5000,
-    // disableHostCheck: true,
-  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Github Repo Researcher',
+      filename: 'index.html',
+      // favicon: './src/favicon.ico',
+      template: './src/index.html',
+      // hash: true,
+    }),
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new ExtractTextPlugin({
+      filename: './css/[name].[hash].css',
+      disable: false,
+    }),
+  ],
 };

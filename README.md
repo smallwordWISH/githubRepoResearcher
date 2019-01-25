@@ -1,25 +1,14 @@
-# ReduxSimpleStarter
+## 開發指令:
+  * 套件安裝: npm i
+  * dev: npm run dev
+  * release:
+    1. npm run build
+    2. npm run server
+    
+> 備註: 可以使用 yarn 取代 npm
 
-Interested in learning [Redux](https://www.udemy.com/react-redux/)?
+## 使用技術:
+  * react16 + redux 
+  * webpack4
+  * coding style: eslint (airbnb style)
 
-### Getting Started
-
-There are two methods for getting started with this repo.
-
-#### Familiar with Git?
-Checkout this repo, install dependencies, then start the gulp process with the following:
-
-```
-> git clone https://github.com/StephenGrider/ReduxSimpleStarter.git
-> cd ReduxSimpleStarter
-> npm install
-> npm start
-```
-
-#### Not Familiar with Git?
-Click [here](https://github.com/StephenGrider/ReactStarter/releases) then download the .zip file.  Extract the contents of the zip file, then open your terminal, change to the project directory, and:
-
-```
-> npm install
-> npm start
-```
