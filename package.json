@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --mode development --open --hot",
-    "build": "webpack --config webpack.build.config.js --mode production -p && xcopy .\\src\\images .\\dist\\images /S /E /I /Y && xcopy .\\src\\locales .\\dist\\locales /S /E /I /Y && xcopy .\\src\\static .\\dist\\static /S /E /I /Y",
-    "server": "pushstate-server dist 8987",
-    "server-run": "nodemon server.js"
+    "build": "webpack --config webpack.build.config.js --mode production -p"
   },
   "repository": {
     "type": "git",

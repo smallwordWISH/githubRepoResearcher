@@ -1,0 +1,46 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, strong, b, dl, dt, dd, ol, ul, li, form, label, table, tbody, tfoot, thead, tr, th, td, article, footer, header, hgroup, menu, nav, section, {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+ol, ul {
+  li {
+    list-style: none;
+  }
+}
+
+a,
+a:hover,
+a:focus  {
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+button {
+  background-color: transparent;
+  outline: none;
+  border: 0;
+  cursor: pointer;
+}
+
+button,
+button:focus,
+input:focus,
+select,
+select:focus,
+a:focus {
+  outline: 0px !important;
+}
+
+button[disabled] {
+  pointer-events: none;
+}

@@ -1,0 +1,45 @@
+// 中文字型
+@font-face {
+  font-family: custom-font-family;
+  src: local('Microsoft YaHei'), local('Microsoft JhengHei');
+  unicode-range: U+4E00-9FFF;
+}
+
+// 英文字型
+@font-face {
+  font-family: custom-font-family;
+  src: local(Arial);
+  unicode-range: U+00-024F;
+}
+
+body,
+html,
+input,
+select {
+  font-family: custom-font-family;
+}
+
+body,
+html {
+  width: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  // color: $darkgray;
+  font-size: 16px;
+  font-family: '微軟正黑體', 'Microsoft JhengHe', 'Segoe UI', 'Microsoft YaHei',
+    Helvetica, sans-serif;
+  // background: $bg-gray;
+}
+
+h1, h2, h3, h4, h5, strong, b, th {
+  font-family: 'Microsoft YaHei', 'Microsoft JhengHei', Arial;
+}
+
+html {
+  transition: all 3s ease-in;
+}
+
+.container {
+  width: $lg-width;
+  margin: 0 auto;
+}

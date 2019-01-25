@@ -66,18 +66,18 @@ module.exports = {
             loader: 'sass-loader',
           }],
       },
-      {
-        test: /\.(png|jpg|gif|md)$/,
-        use: ['file-loader?limit=10000&name=[md5:hash:base64:10].[ext]'],
-      },
-      {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        use: ['url-loader?limit=10000&mimetype=images/svg+xml'],
-      },
-      {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader',
-      },
+      // {
+      //   test: /\.(png|jpg|gif|md)$/,
+      //   use: ['file-loader?limit=10000&name=[md5:hash:base64:10].[ext]'],
+      // },
+      // {
+      //   test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+      //   use: ['url-loader?limit=10000&mimetype=images/svg+xml'],
+      // },
+      // {
+      //   test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      //   loader: 'file-loader',
+      // },
 
     ],
   },
@@ -92,9 +92,7 @@ module.exports = {
       store: path.resolve(__dirname, 'src/store'),
       actions: path.resolve(__dirname, 'src/actions'),
       components: path.resolve(__dirname, 'src/components'),
-      configs: path.resolve(__dirname, 'src/configs'),
       reducers: path.resolve(__dirname, 'src/reducers'),
-      images: path.resolve(__dirname, 'src/images'),
       historyLib: path.resolve(__dirname, 'src/historyLib'),
     },
   },
