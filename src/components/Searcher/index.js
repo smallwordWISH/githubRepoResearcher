@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { debounce } from 'lodash';
 
 import langList from 'configs/langList';
 import { fetchSearchResult } from 'actions';
@@ -17,10 +17,38 @@ class Searcher extends Component {
     };
   }
 
-  inputOnChangeHandler = (searchText) => {
-    this.setState({ searchText });
+  componentDidUpdate(prevProps, prevState) {
+    const { searchText, lang, sort } = this.state;
+    const { fetchSearchResult } = this.props;
+    const queryObj = {
+      searchText,
+      lang,
+      sort,
+    };
+    if (prevState.lang !== lang && searchText !== '') {
+      fetchSearchResult(queryObj);
+    }
+    if (prevState.sort !== sort && searchText !== '') {
+      fetchSearchResult(queryObj);
+    }
+    if (prevState.searchText !== searchText && searchText !== '') {
+      this.debounceSearch();
+    }
   }
 
+  inputOnChangeHandler = searchText => this.setState({ searchText });
+
+  debounceSearch = debounce(() => {
+    const { fetchSearchResult } = this.props;
+    const { searchText, sort, lang } = this.state;
+    
+    const queryObj = {
+      searchText,
+      lang,
+      sort,
+    };
+    fetchSearchResult(queryObj);
+  }, 2000);
 
   render() {
     const { searchText, advancedSettingOpen, langListOpen, lang } = this.state;
