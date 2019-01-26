@@ -94,6 +94,8 @@ module.exports = {
       components: path.resolve(__dirname, 'src/components'),
       reducers: path.resolve(__dirname, 'src/reducers'),
       historyLib: path.resolve(__dirname, 'src/historyLib'),
+      configs: path.resolve(__dirname, 'src/configs'),
+      utils: path.resolve(__dirname, 'src/utils'),
     },
   },
   devServer: {

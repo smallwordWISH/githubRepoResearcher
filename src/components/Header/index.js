@@ -7,7 +7,7 @@ class Header extends Component {
       <header>
         <div className="container">
           <nav>
-            <Link to="/">Github Repo Searcher</Link>
+            <Link to="/">Github Repo Researcher</Link>
           </nav>
         </div>
       </header>

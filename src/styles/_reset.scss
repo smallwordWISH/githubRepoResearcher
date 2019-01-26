@@ -44,3 +44,8 @@ a:focus {
 button[disabled] {
   pointer-events: none;
 }
+
+input {
+  border: none;
+  padding: 0 20px;
+}
