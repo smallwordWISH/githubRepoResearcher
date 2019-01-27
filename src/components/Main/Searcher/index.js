@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { debounce } from 'lodash';
 
+import store from 'store';
 import langList from 'configs/langList';
-import { fetchSearchResult } from 'actions';
+import { fetchSearchResult, openSpinner } from 'actions';
 
 class Searcher extends Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class Searcher extends Component {
     };
   }
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log('getDerivedStateFromProps', nextProps, prevState);
+    // console.log('getDerivedStateFromProps', nextProps, prevState);
     return {
       ...prevState,
       searchText: nextProps.searchText,
@@ -28,18 +29,27 @@ class Searcher extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { searchText, lang, sort } = this.state;
-    const { fetchSearchResult } = this.props;
+    const { fetchSearchResult, openSpinner, setSearchReset } = this.props;
     const queryObj = {
       searchText,
       lang,
       sort,
     };
-
-    console.log('componentDidUpdate', prevState);
     if ((prevState.lang !== lang || prevState.sort !== sort) && searchText !== '') {
+      store.dispatch({
+        type: 'FETCH_SEARCH_RESULT',
+        payload: '',
+      });
+      setSearchReset();
       fetchSearchResult(queryObj);
     }
     if (prevState.searchText !== searchText && searchText !== '') {
+      store.dispatch({
+        type: 'FETCH_SEARCH_RESULT',
+        payload: '',
+      });
+      setSearchReset();
+      openSpinner();
       this.debounceSearch();
     }
   }
@@ -92,4 +102,4 @@ class Searcher extends Component {
 }
 
 
-export default connect(null, { fetchSearchResult })(Searcher);
+export default connect(null, { fetchSearchResult, openSpinner })(Searcher);

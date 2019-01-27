@@ -3,15 +3,18 @@ import React, { Component } from 'react';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import Main from 'components/Main';
-// import Searcher from 'components/Searcher';
-// import RepoList from 'components/RepoList';
+import Spinner from 'components/Spinner';
+import store from 'store';
 
 export default class App extends Component {
+
   render() {
+    // console.log(store.getState());
     return (
       <div>
         <Header />
         <Main />
+        <Spinner />
         <Footer />
       </div>
     );

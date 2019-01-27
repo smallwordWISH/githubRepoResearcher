@@ -19,11 +19,13 @@ class RepoList extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { addSearchResult, searchText, lang, sort } = this.props;
     const { currentPage } = this.state;
+    const eventHandler = this.handleScroll;
     const queryObj = {
       searchText,
       lang,
       sort,
       page: currentPage,
+      eventHandler,
     };
     if (prevState.currentPage !== currentPage) {
       console.log('add result', currentPage);
@@ -37,9 +39,9 @@ class RepoList extends Component {
 
   handleScroll = () => {
     const { currentPage } = this.state;
-    console.log(window.innerHeight, window.scrollY);
+    // console.log(window.innerHeight, window.scrollY);
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      console.log('here');
+      // console.log('here');
       this.setState({ currentPage: currentPage + 1 });
     }
   }
@@ -50,12 +52,12 @@ class RepoList extends Component {
     return (
       <div className="container">
         {searchResults.map(item => (
-          <div className="item">
+          <div key={item.id + item.name} className="item">
             <h4>{item.full_name}</h4>
             <h5>{item.language}</h5>
             <h5>{item.stargazers_count}</h5>
             <p>{item.description}</p>
-            <l>{item.updated_at}</l>
+            <p>{item.updated_at}</p>
           </div>
         ))}
       </div>
