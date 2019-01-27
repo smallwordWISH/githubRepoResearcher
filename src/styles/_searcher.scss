@@ -14,17 +14,17 @@
   input {
     font-size: 28px;
     width: 100%;
+    max-width: 800px;
     height: 36px;
-    box-shadow: $shadow-l;
+    box-shadow: $shadow-m;
     border-radius: 9999px;
   }
 
   button {
-    justify-self: right;
+    display: block;
     text-decoration: underline;
-    text-align: right;
     color: $main-red-d;
-    margin: 10px 0;
+    margin: 10px auto;
     padding: 10px 0;
     &:hover {
       color: #fff;

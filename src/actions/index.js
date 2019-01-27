@@ -66,3 +66,10 @@ export function openSpinner() {
     payload: { open: true, msg: '' },
   });
 }
+
+export function closeSpinner() {
+  return ({
+    type: CHANGE_SPINNER_STATUS,
+    payload: { open: false, msg: '' },
+  });
+}

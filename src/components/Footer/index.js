@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer>
       <div className="footer container">
-        Made with love by S.W.
+        Made with <span role="img" aria-label="heart">❤️</span> by S.W.
       </div>
     </footer>
   );

@@ -4,7 +4,7 @@ import { debounce } from 'lodash';
 
 import store from 'store';
 import langList from 'configs/langList';
-import { fetchSearchResult, openSpinner } from 'actions';
+import { fetchSearchResult, openSpinner, closeSpinner } from 'actions';
 
 class Searcher extends Component {
   constructor(props) {
@@ -18,7 +18,6 @@ class Searcher extends Component {
     };
   }
   static getDerivedStateFromProps(nextProps, prevState) {
-    // console.log('getDerivedStateFromProps', nextProps, prevState);
     return {
       ...prevState,
       searchText: nextProps.searchText,
@@ -29,7 +28,7 @@ class Searcher extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { searchText, lang, sort } = this.state;
-    const { fetchSearchResult, openSpinner, setSearchReset } = this.props;
+    const { fetchSearchResult, openSpinner, setSearchReset, closeSpinner } = this.props;
     const queryObj = {
       searchText,
       lang,
@@ -51,6 +50,9 @@ class Searcher extends Component {
       setSearchReset();
       openSpinner();
       this.debounceSearch();
+    }
+    if (searchText === '') {
+      closeSpinner();
     }
   }
 
@@ -75,7 +77,7 @@ class Searcher extends Component {
       <section className="searcher-panel">
         <div className="container">
           <h1>Search Github Repo Now</h1>
-          <input value={searchText} onChange={e => inputOnChange(e.target.value)} />
+          <input value={searchText} autoFocus onChange={e => inputOnChange(e.target.value)} />
           <button onClick={() => this.setState({ advancedSettingOpen: !advancedSettingOpen })}>advanced setting</button>
           <div className={`advanced-setting-panel ${advancedSettingOpen ? 'active' : ''}`}>
             <div className="lang-setting">
@@ -102,4 +104,4 @@ class Searcher extends Component {
 }
 
 
-export default connect(null, { fetchSearchResult, openSpinner })(Searcher);
+export default connect(null, { fetchSearchResult, openSpinner, closeSpinner })(Searcher);

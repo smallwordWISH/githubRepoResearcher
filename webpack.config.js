@@ -10,7 +10,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: './src/index.html',
-  // favicon: './src/favicon.ico',
+  favicon: './src/favicon.ico',
   filename: './index.html',
 });
 

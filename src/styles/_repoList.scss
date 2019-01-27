@@ -1,0 +1,35 @@
+.result-panel {
+  // min-height: 250px;
+  .item {
+    width: 100%;
+    min-height: 200px;
+    padding: 30px 0;
+    border-bottom: 1px solid $light-gray;
+    display: grid;
+    grid-template-columns: 1fr 100px 100px;
+    grid-template-rows: 30px 1fr 20px;
+    grid-gap: 10px;
+    align-items: center;
+
+    h4 {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    h5 {
+      justify-self: end;
+    }
+    a {
+      color: #4062e8;
+    }
+    a:hover {
+      text-decoration: underline;
+      color: $main-red;
+    }
+    b {
+      color: $light-gray;
+      font-style: italic;
+      grid-column: span 3;
+      justify-self: end;
+    }
+  }
+}

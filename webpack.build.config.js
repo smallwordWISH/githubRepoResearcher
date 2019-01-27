@@ -101,7 +101,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Github Repo Researcher',
       filename: 'index.html',
-      // favicon: './src/favicon.ico',
+      favicon: './src/favicon.ico',
       template: './src/index.html',
       // hash: true,
     }),

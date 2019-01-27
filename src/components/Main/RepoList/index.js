@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { Link } from 'react-router-dom';
+import { debounce } from 'lodash';
 import { addSearchResult } from 'actions';
 
 class RepoList extends Component {
@@ -27,6 +28,7 @@ class RepoList extends Component {
       page: currentPage,
       eventHandler,
     };
+    
     if (prevState.currentPage !== currentPage) {
       console.log('add result', currentPage);
       addSearchResult(queryObj);
@@ -37,12 +39,17 @@ class RepoList extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
-  handleScroll = () => {
+  debounceAddPage = debounce(() => {
     const { currentPage } = this.state;
-    // console.log(window.innerHeight, window.scrollY);
+    this.setState({ currentPage: currentPage + 1 });
+  }, 2000, {
+    leading: true,
+    trailing: false,
+  });
+
+  handleScroll = () => {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      // console.log('here');
-      this.setState({ currentPage: currentPage + 1 });
+      this.debounceAddPage();
     }
   }
 
@@ -53,11 +60,11 @@ class RepoList extends Component {
       <div className="container">
         {searchResults.map(item => (
           <div key={item.id + item.name} className="item">
-            <h4>{item.full_name}</h4>
+            <h4><Link to={item.html_url}>{item.full_name}</Link></h4>
             <h5>{item.language}</h5>
-            <h5>{item.stargazers_count}</h5>
+            <h5><span role="img" aria-label="star">⭐️</span>&nbsp;{item.stargazers_count}</h5>
             <p>{item.description}</p>
-            <p>{item.updated_at}</p>
+            <b>Updated: {item.updated_at.replace(/\Z/g, '').replace(/\T/g, ' ')}</b>
           </div>
         ))}
       </div>
