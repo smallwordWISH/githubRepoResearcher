@@ -8,48 +8,44 @@ class RepoList extends Component {
     super(props);
 
     this.state = {
-      currentPage: '',
-    }
+      currentPage: 1,
+    };
   }
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { addSearchResult, searchText, lang, sort } = this.props;
+    const { currentPage } = this.state;
+    const queryObj = {
+      searchText,
+      lang,
+      sort,
+      page: currentPage,
+    };
+    if (prevState.currentPage !== currentPage) {
+      console.log('add result', currentPage);
+      addSearchResult(queryObj);
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
-  componentWillReceiveProps({ searchResults }) {
-    console.log(searchResults);
-    if (searchResults !== this.props.searchResults && searchResults !== undefined) {
-      this.setState({
-        currentPage: 1,
-      });
-    }
-  }
-
   handleScroll = () => {
-    const { addSearchResult } = this.props;
     const { currentPage } = this.state;
-    const queryObj = {
-      searchText: 'react',
-      lang: 'HTML',
-      sort: 'stars',
-      page: currentPage,
-    };
     console.log(window.innerHeight, window.scrollY);
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
       console.log('here');
-      this.setState({ currentPage: currentPage + 1 }, () => {
-        addSearchResult(queryObj);
-      });
+      this.setState({ currentPage: currentPage + 1 });
     }
   }
 
   renderResultList = () => {
     const { searchResults } = this.props;
-    const { currentPage } = this.state;
     if (!searchResults || searchResults === undefined) return null;
     return (
       <div className="container">

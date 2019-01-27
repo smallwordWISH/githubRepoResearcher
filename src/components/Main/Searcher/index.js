@@ -16,6 +16,15 @@ class Searcher extends Component {
       langListOpen: false,
     };
   }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log('getDerivedStateFromProps', nextProps, prevState);
+    return {
+      ...prevState,
+      searchText: nextProps.searchText,
+      lang: nextProps.lang,
+      sort: nextProps.sort,
+    };
+  }
 
   componentDidUpdate(prevProps, prevState) {
     const { searchText, lang, sort } = this.state;
@@ -24,12 +33,10 @@ class Searcher extends Component {
       searchText,
       lang,
       sort,
-      page: 1,
     };
-    if (prevState.lang !== lang && searchText !== '') {
-      fetchSearchResult(queryObj);
-    }
-    if (prevState.sort !== sort && searchText !== '') {
+
+    console.log('componentDidUpdate', prevState);
+    if ((prevState.lang !== lang || prevState.sort !== sort) && searchText !== '') {
       fetchSearchResult(queryObj);
     }
     if (prevState.searchText !== searchText && searchText !== '') {
@@ -37,7 +44,7 @@ class Searcher extends Component {
     }
   }
 
-  inputOnChangeHandler = searchText => this.setState({ searchText });
+  // inputOnChangeHandler = searchText => this.setState({ searchText });
 
   debounceSearch = debounce(() => {
     const { fetchSearchResult } = this.props;
@@ -52,12 +59,13 @@ class Searcher extends Component {
   }, 2000);
 
   render() {
+    const { inputOnChange, langOnClick, sortOnClick } = this.props;
     const { searchText, advancedSettingOpen, langListOpen, lang } = this.state;
     return (
       <section className="searcher-panel">
         <div className="container">
           <h1>Search Github Repo Now</h1>
-          <input value={searchText} onChange={(e) => { this.inputOnChangeHandler(e.target.value); }} />
+          <input value={searchText} onChange={e => inputOnChange(e.target.value)} />
           <button onClick={() => this.setState({ advancedSettingOpen: !advancedSettingOpen })}>advanced setting</button>
           <div className={`advanced-setting-panel ${advancedSettingOpen ? 'active' : ''}`}>
             <div className="lang-setting">
@@ -65,15 +73,15 @@ class Searcher extends Component {
               <ul onClick={() => this.setState({ langListOpen: !langListOpen })}>
                 <span>{lang}</span>
                 <div className={`lang-list ${langListOpen ? 'active' : ''}`}>
-                  {langList.map(item => <li key={item} onClick={() => { this.setState({ lang: item }); }}>{item}</li>)}
+                  {langList.map(item => <li key={item} onClick={() => langOnClick(item)}>{item}</li>)}
                 </div>
               </ul>
             </div>
             <div className="sort-setting">
               <label>Sort by:</label>
-              <input name="sort" type="radio" value="stars" onClick={(e) => { this.setState({ sort: e.target.value }) }} />
+              <input name="sort" type="radio" value="stars" onClick={e => sortOnClick(e.target.value)} />
               <label>Stars</label>
-              <input name="sort" type="radio" value="updated" onClick={(e) => { this.setState({ sort: e.target.value }) }} />
+              <input name="sort" type="radio" value="updated" onClick={e => sortOnClick(e.target.value)} />
               <label>Updated Time</label>
             </div>
           </div>
