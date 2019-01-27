@@ -8,17 +8,41 @@ class RepoList extends Component {
     super(props);
 
     this.state = {
-      totalPages: '',
       currentPage: '',
     }
   }
 
-  componentWillReceiveProps({searchResults}) {
-    console.log(searchResults)
-    if (searchResults !== this.props.searchResults && searchResults.items !== undefined) {
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillReceiveProps({ searchResults }) {
+    console.log(searchResults);
+    if (searchResults !== this.props.searchResults && searchResults !== undefined) {
       this.setState({
-        totalPages: Math.ceil(searchResults.totalPages / 20),
         currentPage: 1,
+      });
+    }
+  }
+
+  handleScroll = () => {
+    const { addSearchResult } = this.props;
+    const { currentPage } = this.state;
+    const queryObj = {
+      searchText: 'react',
+      lang: 'HTML',
+      sort: 'stars',
+      page: currentPage,
+    };
+    console.log(window.innerHeight, window.scrollY);
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      console.log('here');
+      this.setState({ currentPage: currentPage + 1 }, () => {
+        addSearchResult(queryObj);
       });
     }
   }
@@ -26,40 +50,18 @@ class RepoList extends Component {
   renderResultList = () => {
     const { searchResults } = this.props;
     const { currentPage } = this.state;
-    if (!searchResults || searchResults.items === undefined ) return null;
-    // const itemsEachPage = 20;
-    // const newDataArrays = [];
-    // for (let i = 0; i < searchResults.items.length; i += itemsEachPage) {
-    //   newDataArrays.push = searchResults.items.slice(i, i + itemsEachPage);
-    // }
-    // console.log(newDataArrays);
+    if (!searchResults || searchResults === undefined) return null;
     return (
       <div className="container">
-        {/* {newDataArrays.map((array, index) => {
-          if (index < currentPage) {
-            array.map(item => (
-              <div className="item">
-                <h4>{item.full_name}</h4>
-                <h5>{item.language}</h5>
-                <h5>{item.stargazers_count}</h5>
-                <p>{item.description}</p>
-                <l>{item.updated_at}</l>
-              </div>
-            ));
-          }
-          return false;
-        })} */}
-        {
-          searchResults.items.map(item => (
-            <div className="item">
-              <h4>{item.full_name}</h4>
-              <h5>{item.language}</h5>
-              <h5>{item.stargazers_count}</h5>
-              <p>{item.description}</p>
-              <l>{item.updated_at}</l>
-            </div>
-          ))
-        }
+        {searchResults.map(item => (
+          <div className="item">
+            <h4>{item.full_name}</h4>
+            <h5>{item.language}</h5>
+            <h5>{item.stargazers_count}</h5>
+            <p>{item.description}</p>
+            <l>{item.updated_at}</l>
+          </div>
+        ))}
       </div>
     );
   }

@@ -25,7 +25,6 @@ class Searcher extends Component {
       lang,
       sort,
       page: 1,
-      perPage: 30,
     };
     if (prevState.lang !== lang && searchText !== '') {
       fetchSearchResult(queryObj);
