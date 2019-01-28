@@ -1,7 +1,7 @@
 import axios from 'axios';
 import store from 'store';
 
-import { CHANGE_SPINNER_STATUS } from 'actions';
+import { CHANGE_SPINNER_STATUS, openSpinner, closeSpinner } from 'actions';
 
 const baseURL = 'https://api.github.com/';
 
@@ -12,28 +12,14 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   request => {
-    const spinnerObj = {
-      open: true,
-      msg: '',
-    }
-    store.dispatch({
-      type: CHANGE_SPINNER_STATUS,
-      payload: spinnerObj
-    })
+    openSpinner();
     return request
   }
 )
 
 instance.interceptors.response.use(
   response => {
-    const spinnerObj = {
-      open: false,
-      msg: '',
-    }
-    store.dispatch({
-      type: CHANGE_SPINNER_STATUS,
-      payload: spinnerObj
-    })
+    closeSpinner();
     return response
   },
   error => {

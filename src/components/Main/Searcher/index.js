@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { debounce } from 'lodash';
 
-import store from 'store';
 import langList from 'configs/langList';
-import { fetchSearchResult, openSpinner, closeSpinner } from 'actions';
+import { fetchSearchResult, clearSearchResult, openSpinner, closeSpinner } from 'actions';
 
 class Searcher extends Component {
   constructor(props) {
@@ -28,30 +27,26 @@ class Searcher extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { searchText, lang, sort } = this.state;
-    const { fetchSearchResult, openSpinner, setSearchReset, closeSpinner } = this.props;
+    const { fetchSearchResult, clearSearchResult, openSpinner, setSearchReset, closeSpinner } = this.props;
     const queryObj = {
       searchText,
       lang,
       sort,
     };
     if ((prevState.lang !== lang || prevState.sort !== sort) && searchText !== '') {
-      store.dispatch({
-        type: 'FETCH_SEARCH_RESULT',
-        payload: '',
-      });
+      clearSearchResult();
       setSearchReset();
+      openSpinner();
       fetchSearchResult(queryObj);
     }
     if (prevState.searchText !== searchText && searchText !== '') {
-      store.dispatch({
-        type: 'FETCH_SEARCH_RESULT',
-        payload: '',
-      });
+      clearSearchResult();
       setSearchReset();
       openSpinner();
       this.debounceSearch();
     }
     if (searchText === '') {
+      clearSearchResult();
       closeSpinner();
     }
   }
@@ -61,7 +56,7 @@ class Searcher extends Component {
   debounceSearch = debounce(() => {
     const { fetchSearchResult } = this.props;
     const { searchText, sort, lang } = this.state;
-    
+
     const queryObj = {
       searchText,
       lang,
@@ -72,12 +67,12 @@ class Searcher extends Component {
 
   render() {
     const { inputOnChange, langOnClick, sortOnClick } = this.props;
-    const { searchText, advancedSettingOpen, langListOpen, lang } = this.state;
+    const { searchText, advancedSettingOpen, langListOpen, lang, sort } = this.state;
     return (
       <section className="searcher-panel">
         <div className="container">
           <h1>Search Github Repo Now</h1>
-          <input value={searchText} autoFocus onChange={e => inputOnChange(e.target.value)} />
+          <input className="searcher" value={searchText} autoFocus onChange={e => inputOnChange(e.target.value)} />
           <button onClick={() => this.setState({ advancedSettingOpen: !advancedSettingOpen })}>advanced setting</button>
           <div className={`advanced-setting-panel ${advancedSettingOpen ? 'active' : ''}`}>
             <div className="lang-setting">
@@ -91,7 +86,7 @@ class Searcher extends Component {
             </div>
             <div className="sort-setting">
               <label>Sort by:</label>
-              <input name="sort" type="radio" value="stars" onClick={e => sortOnClick(e.target.value)} />
+              <input name="sort" type="radio" value="stars" onClick={e => sortOnClick(e.target.value)} defaultChecked />
               <label>Stars</label>
               <input name="sort" type="radio" value="updated" onClick={e => sortOnClick(e.target.value)} />
               <label>Updated Time</label>
@@ -104,4 +99,11 @@ class Searcher extends Component {
 }
 
 
-export default connect(null, { fetchSearchResult, openSpinner, closeSpinner })(Searcher);
+export default connect(null,
+  {
+    fetchSearchResult,
+    clearSearchResult,
+    openSpinner,
+    closeSpinner,
+  },
+)(Searcher);
