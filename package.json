@@ -1,11 +1,14 @@
 {
   "name": "github_repo_researcher",
   "version": "1.0.0",
+  "engines": {
+    "node": "10.3.0"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --mode development --open --hot",
-    "build": "webpack --config webpack.build.config.js --mode production -p && xcopy .\\src\\images .\\dist\\images /S /E /I /Y ",
+    "build": "webpack --config webpack.build.config.js --mode production -p && xcopy .\\src\\images .\\dist\\images /S /E /I /Y",
     "start": "node server.js",
     "heroku-postbuild": "npm run build"
   },
