@@ -1,11 +1,12 @@
 {
-  "name": "bae_front",
+  "name": "github_repo_researcher",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --mode development --open --hot",
-    "build": "webpack --config webpack.build.config.js --mode production -p"
+    "build": "webpack --config webpack.build.config.js --mode production -p",
+    "heroku-postbuild": "cd src/ && npm install && npm run build"
   },
   "repository": {
     "type": "git",

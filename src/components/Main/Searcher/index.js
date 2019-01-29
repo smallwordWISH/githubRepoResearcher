@@ -71,7 +71,7 @@ class Searcher extends Component {
     return (
       <section className="searcher-panel">
         <div className="container">
-          <h1>Search Github Repo Now</h1>
+          <h1>Search, Repo, Now</h1>
           <input className="searcher" value={searchText} autoFocus onChange={e => inputOnChange(e.target.value)} />
           <button onClick={() => this.setState({ advancedSettingOpen: !advancedSettingOpen })}>advanced setting</button>
           <div className={`advanced-setting-panel ${advancedSettingOpen ? 'active' : ''}`}>
