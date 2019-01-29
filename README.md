@@ -8,7 +8,7 @@
 ## production指令:
   1. npm run build
   2. npm start
-    
+  
 > 備註: 可以使用 yarn 取代 npm
 
 ## 使用技術:
