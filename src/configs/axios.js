@@ -23,7 +23,6 @@ instance.interceptors.response.use(
     return response
   },
   error => {
-    console.log(error);
     const spinnerObj = {
       open: true,
       msg: 'You have exceeded rate limit, please wait 1 minutes and resend...',

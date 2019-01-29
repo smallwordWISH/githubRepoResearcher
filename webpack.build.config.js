@@ -88,13 +88,13 @@ module.exports = {
       path.join(__dirname, './src'),
     ],
     alias: {
-      react: path.join(__dirname, 'node_modules', 'react'),
+      store: path.resolve(__dirname, 'src/store'),
       actions: path.resolve(__dirname, 'src/actions'),
       components: path.resolve(__dirname, 'src/components'),
       reducers: path.resolve(__dirname, 'src/reducers'),
-      images: path.resolve(__dirname, 'src/images'),
-      libs: path.resolve(__dirname, 'src/libs'),
       historyLib: path.resolve(__dirname, 'src/historyLib'),
+      configs: path.resolve(__dirname, 'src/configs'),
+      images: path.resolve(__dirname, 'src/images'),
     },
   },
   plugins: [

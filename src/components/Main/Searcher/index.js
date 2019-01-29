@@ -67,12 +67,14 @@ class Searcher extends Component {
 
   render() {
     const { inputOnChange, langOnClick, sortOnClick } = this.props;
-    const { searchText, advancedSettingOpen, langListOpen, lang, sort } = this.state;
+    const { searchText, advancedSettingOpen, langListOpen, lang } = this.state;
     return (
       <section className="searcher-panel">
         <div className="container">
           <h1>Search, Repo, Now</h1>
-          <input className="searcher" value={searchText} autoFocus onChange={e => inputOnChange(e.target.value)} />
+          <div className="input-wrapper">
+            <input className="searcher" value={searchText} autoFocus onChange={e => inputOnChange(e.target.value)} />
+          </div>
           <button onClick={() => this.setState({ advancedSettingOpen: !advancedSettingOpen })}>advanced setting</button>
           <div className={`advanced-setting-panel ${advancedSettingOpen ? 'active' : ''}`}>
             <div className="lang-setting">

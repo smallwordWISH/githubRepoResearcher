@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { debounce } from 'lodash';
 import { addSearchResult } from 'actions';
 
@@ -30,7 +29,6 @@ class RepoList extends Component {
     };
     
     if (prevState.currentPage !== currentPage) {
-      console.log('add result', currentPage);
       addSearchResult(queryObj);
     }
   }
@@ -60,7 +58,7 @@ class RepoList extends Component {
       <div className="container">
         {searchResults.map(item => (
           <div key={item.id + item.name} className="item">
-            <h4><Link to={item.html_url}>{item.full_name}</Link></h4>
+            <h4><a href={item.html_url} target="_blank" rel="noopener noreferrer">{item.full_name}</a></h4>
             <h5>{item.language}</h5>
             <h5><span role="img" aria-label="star">⭐️</span>&nbsp;{item.stargazers_count}</h5>
             <p>{item.description}</p>

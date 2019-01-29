@@ -4,22 +4,34 @@
   display: flex;
   text-align: center;
   align-items: center;
-
   h1 {
     font-size: 40px;
     color: #ffffff;
     margin: 40px 0 20px 0;
   }
-
   input.searcher {
     font-size: 28px;
     width: 100%;
-    max-width: 800px;
     height: 36px;
     box-shadow: $shadow-m;
     border-radius: 9999px;
   }
-
+  .input-wrapper {
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+    margin: 0 auto;
+    &::after {
+      content: '';
+      width: 25px;
+      height: 25px;
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      background-image: url(/images/search-icon.png);
+      background-size: cover;
+    }
+  }
   button {
     display: block;
     text-decoration: underline;

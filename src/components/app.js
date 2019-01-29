@@ -9,7 +9,6 @@ import store from 'store';
 export default class App extends Component {
 
   render() {
-    // console.log(store.getState());
     return (
       <div>
         <Header />
