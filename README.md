@@ -1,9 +1,13 @@
-## 開發指令:
-  * 套件安裝: npm i
-  * dev: npm run dev
-  * release:
-    1. npm run build
-    2. npm run server
+# Github Repo Researcher
+
+## dev指令:
+  1. 套件安裝: npm i
+  2. build: npm run build
+  3. dev: npm run dev
+
+## production指令:
+  1. npm run build
+  2. npm start
     
 > 備註: 可以使用 yarn 取代 npm
 
