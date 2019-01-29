@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --config webpack.build.config.js --mode production -p",
-    "start": "npm run build",
+    "start": "node server.js",
     "heroku-postbuild": "npm run build"
   },
   "repository": {

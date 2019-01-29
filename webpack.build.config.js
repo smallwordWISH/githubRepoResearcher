@@ -77,7 +77,7 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    port: process.env.PORT || 9000,
+    port: process.env.PORT || 8080,
     open: true,
     hot: true,
   },
